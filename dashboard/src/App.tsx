@@ -1,26 +1,40 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
-
+import axios from 'axios'
+import { ProcessComponent } from './Process';
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [status, setStatus] = useState(false);
+    const [processes, setProcesses] = useState([])
+    useEffect(() => {
+        axios.get("http://localhost:7000/status").then((res) => {
+            if (res.data.status) {
+                setStatus(res.data.status)
+                axios.get("http://localhost:7000/processes").then((res) => {
+                    if (res.data.processes) {
+                        console.log(res.data.processes)
+                        setProcesses(res.data.processes)
+                    }
+                }).catch(e => {
+
+                })
+            }
+        })
+    }, [])
+
+    return (
+        <div className="App">
+            <header className="App-header">
+                <h1>Child Manager</h1>
+                <p>
+                    STATUS: {(status) ? <span className="online">ONLINE</span> : <span className="offline">OFFLINE</span>}
+                </p>
+            </header>
+            <div className="App-body">{processes.map((process, index) => {
+                return <ProcessComponent key={index} process={process} />
+            })}</div>
+        </div>
+    );
 }
 
 export default App;

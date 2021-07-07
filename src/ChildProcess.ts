@@ -13,7 +13,7 @@ export class ChildProcess {
     processId: string
     processStart: Date | undefined
     processStop: Date | undefined
-    process: ChildProcessWithoutNullStreams | undefined
+    private process: ChildProcessWithoutNullStreams | undefined
     constructor(config: ChildProcessConfig, id: string) {
         this.command = ChildProcessCommandStd(config.command)
         this.logs = new ArrayLimited(config.maxLogs)
@@ -53,5 +53,11 @@ export class ChildProcess {
         this.process?.stderr.on('data', (data) => {
             this.logsError.push(SanitizeOutput(data.toString()))
         })
+    }
+    kill = () => {
+        if (this.process) {
+            return this.process.kill()
+        }
+        return false
     }
 }

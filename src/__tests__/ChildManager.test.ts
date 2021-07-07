@@ -16,7 +16,8 @@ const lib = new ChildManager({
         maxLogs: 20
     }],
     captureExit: true,
-    longLive: false
+    longLive: false,
+    debug: false,
 })
 
 

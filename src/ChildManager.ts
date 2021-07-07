@@ -22,6 +22,10 @@ export class ChildManager {
             setInterval(() => { }, 1 << 30);
         }
         // Spawn all children
+        this.spawn(config)
+    }
+
+    private spawn = (config: ChildManagerConfig) => {
         config.processes.forEach(childProcessConfig => {
             const id = cuid()
             const newProcess = new ChildProcess(childProcessConfig, id)
@@ -32,7 +36,7 @@ export class ChildManager {
 
     log = () => {
         Object.keys(this.processes).map((key, index) => {
-            console.log(`${index}  --  ${key}  --  ${this.processes[key].processName}  --  ${this.processes[key].process?.pid}`)
+            console.log(`${index}  --  ${key}  --  ${this.processes[key].processName} `)
         })
     }
 
@@ -53,7 +57,7 @@ export class ChildManager {
     killChildren = () => {
         Object.values(this.processes).forEach(child => {
             if (child.processFinished !== true) {
-                if (child.process?.kill()) {
+                if (child.kill()) {
                     child.processFinished = true
                     // console.log(`EXITTED - ${child.processName}`)
                 } else {

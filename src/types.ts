@@ -15,4 +15,5 @@ export interface ChildManagerConfig {
     processes: ChildProcessConfig[]
     captureExit: boolean
     longLive: boolean
+    debug: boolean
 }

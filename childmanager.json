@@ -1,0 +1,17 @@
+{
+  "processes": [
+    {
+      "name": "Test Service",
+      "command": {
+        "executor": "node",
+        "args": ["TestService.js"],
+        "path": "./src/service",
+        "isWindows": false
+      },
+      "maxLogs": 20
+    }
+  ],
+  "captureExit": true,
+  "longLive": false,
+  "debug": false
+}
