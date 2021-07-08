@@ -177,7 +177,7 @@ if (jsonedConfig) {
         })
         setInterval(() => {
             Object.keys(manager.processes).map(key => {
-                console.log(manager.processes[key].logs.values)
+                //console.log(manager.processes[key].logs.values)
             })
         }, 3000)
         // create Child Manager

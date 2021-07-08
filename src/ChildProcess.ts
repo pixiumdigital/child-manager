@@ -72,6 +72,8 @@ export class ChildProcess {
 
     restart = () => {
         if (this.process) {
+            console.log(this.process.pid)
+            this.process.removeAllListeners()
             if (this.process.kill()) {
                 this.process = undefined
                 this.logs.values = []
@@ -80,6 +82,7 @@ export class ChildProcess {
                     this.process = spawn(this.command.executor, this.command.args, {
                         cwd: this.command.path,
                     });
+                    console.log(this.process.pid)
                     this.logs.push("RESTARTED THE PROCESS")
                     this.processStart = new Date()
                     this.hook()
