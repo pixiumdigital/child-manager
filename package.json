@@ -1,6 +1,6 @@
 {
   "name": "@pixium-digital/child-manager",
-  "version": "1.0.1",
+  "version": "0.0.1",
   "main": "lib/ChildManager.js",
   "types": "lib/ChildManager.d.ts",
   "scripts": {
@@ -12,6 +12,11 @@
     "patch": "npm version patch && npm publish",
     "test": "jest --config jest.json",
     "build-dashboard": "yarn --cwd \"dashboard\" build && rm -rf src/dashboard && cp -R dashboard/build src/dashboard/"
+  },
+  "author": {
+    "name": "Burlet Mederic",
+    "email": "mederic.burlet@pixiumdigital.com",
+    "url": "https://github.com/crimson-med/"
   },
   "keywords": [
     "node",
