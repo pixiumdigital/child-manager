@@ -6,20 +6,35 @@ import { ProcessComponent } from './Process';
 function App() {
     const [status, setStatus] = useState(false);
     const [processes, setProcesses] = useState([])
-    useEffect(() => {
+
+    const getStatus = () => {
         axios.get("http://localhost:7000/status").then((res) => {
             if (res.data.status) {
                 setStatus(res.data.status)
-                axios.get("http://localhost:7000/processes").then((res) => {
-                    if (res.data.processes) {
-                        console.log(res.data.processes)
-                        setProcesses(res.data.processes)
-                    }
-                }).catch(e => {
 
-                })
             }
         })
+    }
+
+    const getProcesses = () => {
+        axios.get("http://localhost:7000/processes").then((res) => {
+            if (res.data.processes) {
+                console.log(res.data.processes)
+                setProcesses(res.data.processes)
+            }
+        }).catch(e => {
+            setProcesses([])
+        })
+    }
+    useEffect(() => {
+        getStatus()
+        getProcesses()
+        setInterval(() => {
+            getStatus()
+        }, 5000)
+        setInterval(() => {
+            getProcesses()
+        }, 5000)
     }, [])
 
     return (

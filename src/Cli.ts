@@ -152,6 +152,26 @@ if (jsonedConfig) {
                 res.send({ logs: [], logsError: [] })
             }
         })
+        app.get('/restart/:id', async (req, res) => {
+            if (req.params.id) {
+                if (manager.processes[req.params.id]) {
+                    const restarted = manager.processes[req.params.id].restart()
+                    res.send({ hasRestarted: restarted })
+                }
+            } else {
+                res.status(400).send({ error: "service not found" })
+            }
+        })
+        app.get('/kill/:id', async (req, res) => {
+            if (req.params.id) {
+                if (manager.processes[req.params.id]) {
+                    const killed = manager.processes[req.params.id].kill()
+                    res.send({ hasKilled: killed })
+                }
+            } else {
+                res.status(400).send({ error: "service not found" })
+            }
+        })
         app.listen(7000, () => {
             console.log("server started on port 7000");
         })

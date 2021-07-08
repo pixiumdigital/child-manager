@@ -8,7 +8,6 @@ export const ProcessComponent = (process: any) => {
     const getData = (id: string) => {
         axios.get("http://localhost:7000/logs/" + id).then((res) => {
             if (res.data.logs) {
-                console.log(res.data)
                 setLogs(res.data.logs)
             }
             if (res.data.logsError) {
@@ -19,10 +18,34 @@ export const ProcessComponent = (process: any) => {
         })
     }
 
+    const restart = (id: string) => {
+        axios.get("http://localhost:7000/restart/" + id).then((res) => {
+            if (res.data.hasRestarted) {
+                alert("Process was restarted with success")
+            } else {
+                alert("Process was restarted without success")
+            }
+        }).catch(e => {
+            alert("Process was restarted without success")
+        })
+    }
+
+    const kill = (id: string) => {
+        axios.get("http://localhost:7000/kill/" + id).then((res) => {
+            if (res.data.hasKilled) {
+                alert("Process was killed with success")
+            } else {
+                alert("Process was killed without success")
+            }
+        }).catch(e => {
+            alert("Process was killed without success")
+        })
+    }
+
     useEffect(() => {
         setInterval(() => {
             getData(process.process.processId)
-        }, 5000)
+        }, 2000)
     }, [])
     const processData = process?.process
     return (
@@ -44,7 +67,20 @@ export const ProcessComponent = (process: any) => {
                         })}
                     </div>
                 }
+
             </div>
+            <div className="card-footer">
+                <div className="card-action">
+                    <button className="btn btn-square btn-md btn-filled-green mr-10" onClick={() => { if (window.confirm('Are you sure you wish to restart the service?')) restart(process.process.processId) }}>
+                        Restart
+                    </button>
+                    <button className="btn btn-square btn-md btn-filled-red" onClick={() => { if (window.confirm('Are you sure you wish to kill the service?')) kill(process.process.processId) }}>
+                        Kill
+                    </button>
+                </div>
+
+            </div>
+
         </div>
     )
 

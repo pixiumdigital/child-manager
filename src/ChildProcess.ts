@@ -25,10 +25,21 @@ export class ChildProcess {
             this.process = spawn(this.command.executor, this.command.args, {
                 cwd: this.command.path,
             });
+            this.processStart = new Date()
+            this.hook()
+            this.log()
+
+        } catch (error) {
+            this.processStop = new Date()
+            this.logsError.push(error)
+            this.process?.kill()
+        }
+    }
+
+    private hook = () => {
+        if (this.process) {
             this.process.stdout.setEncoding('utf8');
             this.process.stderr.setEncoding('utf8');
-            this.processStart = new Date()
-            this.log()
             this.process.on('error', (error) => {
                 this.processStop = new Date()
                 this.logsError.push(error)
@@ -40,13 +51,10 @@ export class ChildProcess {
                 this.process?.kill()
                 return
             });
-        } catch (error) {
-            this.processStop = new Date()
-            this.logsError.push(error)
-            this.process?.kill()
         }
     }
-    log = () => {
+
+    private log = () => {
         this.process?.stdout.on('data', (data) => {
             this.logs.push(SanitizeOutput(data.toString()))
         });
@@ -54,9 +62,37 @@ export class ChildProcess {
             this.logsError.push(SanitizeOutput(data.toString()))
         })
     }
+
     kill = () => {
         if (this.process) {
             return this.process.kill()
+        }
+        return false
+    }
+
+    restart = () => {
+        if (this.process) {
+            if (this.process.kill()) {
+                this.process = undefined
+                this.logs.values = []
+                this.logsError.values = []
+                try {
+                    this.process = spawn(this.command.executor, this.command.args, {
+                        cwd: this.command.path,
+                    });
+                    this.logs.push("RESTARTED THE PROCESS")
+                    this.processStart = new Date()
+                    this.hook()
+                    this.log()
+                    return true
+                } catch (error) {
+                    this.processStop = new Date()
+                    this.logsError.push("RESTARTING THE PROCESS FAILED")
+                    this.logsError.push(error)
+                    this.process?.kill()
+                    return false
+                }
+            }
         }
         return false
     }
