@@ -1,6 +1,6 @@
 {
   "name": "@pixium-digital/child-manager",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "lib/ChildManager.js",
   "types": "lib/ChildManager.d.ts",
   "scripts": {
@@ -9,7 +9,7 @@
     "prepublishOnly": "yarn test",
     "version": "git add -A src",
     "postversion": "git push && git push --tags",
-    "patch": "npm version patch && npm publish",
+    "patch": "npm version patch && npm publish --access public",
     "test": "jest --config jest.json",
     "build-dashboard": "yarn --cwd \"dashboard\" build && rm -rf src/dashboard && cp -R dashboard/build src/dashboard/"
   },
