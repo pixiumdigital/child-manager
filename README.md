@@ -37,7 +37,7 @@ To leverage child manager simply add a configuration file to your project (see b
 You can run thew following command:
 
 ```
-child-manager
+yarn child-manager
 ```
 
 By default the loaded config will be at the source of the project and be named `childmanager.json`
@@ -45,7 +45,7 @@ By default the loaded config will be at the source of the project and be named `
 If you wish to load a different file just pass the config option.
 
 ```
-child-manager --config="./myconfig.json"
+yarn child-manager --config="./myconfig.json"
 ```
 
 You can then access the manager at the following: http://localhost:7000
@@ -142,6 +142,8 @@ More info for gitmoji here https://gitmoji.dev/
 ## Bugs & Issues
 
 Please follow the creating an issue template for any bugs or problems
+
+---
 
 # Author
 
