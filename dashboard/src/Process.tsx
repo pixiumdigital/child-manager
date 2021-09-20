@@ -51,19 +51,27 @@ export const ProcessComponent = (process: any) => {
     return (
         <div className="card">
             <h1>{processData.processName}</h1>
-            <p>Started: {processData.processStart}</p>
+            <p>Started: {processData.processStart.toString()}</p>
             <div className="card-body">
                 {logs.length > 0 &&
                     <div className="card-log">
                         {logs.map((e: string, index) => {
-                            return <p key={`log-${index}`}>{e}</p>
+                            if (typeof e === 'object') {
+                                return <p key={`log-${index}`}>{JSON.stringify(e)}</p>
+                            } else {
+                                return <p key={`log-${index}`}>{e.trim()}</p>
+                            }
                         })}
                     </div>
                 }
                 {logsError.length > 0 &&
                     <div className="card-log">
                         {logsError.map((e: string, index) => {
-                            return <p key={`log-${index}`}>{e}</p>
+                            if (typeof e === 'object') {
+                                return <p key={`log-${index}`}>{JSON.stringify(e)}</p>
+                            } else {
+                                return <p key={`log-${index}`}>{e.trim()}</p>
+                            }
                         })}
                     </div>
                 }

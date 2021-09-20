@@ -47,6 +47,7 @@ export class ChildProcess {
             });
             this.process.on('close', (code) => {
                 this.processStop = new Date()
+                this.logs.push(`Could not spawn process: ${this.processId}, at the following location: :${this.command.path}`)
                 this.logs.push(`Exited with code: ${code}`)
                 this.process?.kill()
                 return
