@@ -107,6 +107,14 @@ Process configurations:
 
 # Development
 
+## Local run
+
+You can use the following command for devlopment:
+
+```
+ts-node src/Cli.ts
+```
+
 ## Hierarchy
 
 - `dashboard`: The source for the react dashboard
