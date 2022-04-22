@@ -1,6 +1,6 @@
 {
   "name": "@pixium-digital/child-manager",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "main": "lib/ChildManager.js",
   "types": "lib/ChildManager.d.ts",
   "scripts": {
